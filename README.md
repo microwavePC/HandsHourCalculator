@@ -257,3 +257,76 @@ MainPage.xamlのButtonに、以下のようにCommandのバインドを追加し
         Command="{Binding CalculateCommand}"/>
 ```
 
+### 9. 計算結果がViewへ反映されるようにする
+
+ここまでの手順で、Viewに対するユーザーが行った入力等の操作がViewModelに通知されるようになりました。<br>
+逆に「ViewModelで行った値の変更をViewに反映させる」ための手順はとても簡単で、Viewにバインドされているプロパティに値を代入するだけでOKです。<br>
+計算結果がViewに反映されるよう、MainPageViewModelの処理「calculate」の最後の部分を以下のように修正しましょう。<br>
+
+**・修正前**
+```C#
+switch (_calcMethodIndex)
+{
+    // Viewとバインドされているプロパティ（ここではCalculationResultとImageSourcePath）を更新すると、
+    // その変更がViewに反映される。
+
+    case INDEX_DOUBLE:
+        ImageSourcePath = IMAGE_DOUBLE;
+        break;
+    case INDEX_TEN_TIMES:
+        ImageSourcePath = IMAGE_TEN_TIMES;
+        break;
+    case INDEX_ONE_HUNDRED_TIMES:
+        ImageSourcePath = IMAGE_ONE_HUNDRED_TIMES;
+        break;
+    default:
+        return;
+}
+```
+
+**・修正後**
+```C#
+switch (_calcMethodIndex)
+{
+    // Viewとバインドされているプロパティ（ここではCalculationResultとImageSourcePath）を更新すると、
+    // その変更がViewに反映される。
+
+    case INDEX_DOUBLE:
+        CalculationResult = calculator.ToDoubleNumber(targetNum);
+        ImageSourcePath = IMAGE_DOUBLE;
+        break;
+    case INDEX_TEN_TIMES:
+        CalculationResult = calculator.ToTenTimes(targetNum);
+        ImageSourcePath = IMAGE_TEN_TIMES;
+        break;
+    case INDEX_ONE_HUNDRED_TIMES:
+        CalculationResult = calculator.ToOneHundredTimes(targetNum);
+        ImageSourcePath = IMAGE_ONE_HUNDRED_TIMES;
+        break;
+    default:
+        return;
+}
+```
+
+これでサンプルアプリの修正は完了です。<br>
+
+### 10. アプリを動かしてみよう
+
+ここまでの手順が完了したら、入力から計算結果の画面への反映まで、一連の動作が行われるような状態になっています。<br>
+アプリを再度シミュレーターで動かしてみましょう。<br>
+
+### おまけ1. iOSの実機でデバッグしてみよう
+
+時間が余ってしまった方は、[この説明](https://qiita.com/KakeruFukuda/items/176c0aef5db0e04d6859)を参考に、アプリをiOSの実機でデバッグしてみましょう。<br>
+もし持ち込み端末が普段iOSアプリの開発に使用しているものであれば、実機をMacに接続してデバッグ先を変えるだけですんなり実行できます。<br>
+
+![image05](ReadmeImages/image05.png)
+
+### おまけ2.（Android SDK が Mac に入っているなら）Androidでデバッグ実行してみよう
+
+実行方法を「HandsHourCalculator.Droid  >  Debug | x86  >  Androidの端末名」に変更すれば、Androidの実機やシミュレーターでもデバッグすることができます。<br>
+
+### おまけ3. いまどこアプリに「なりすまし」をかましてみよう
+
+[iOS/Android/WindowsPhoneの全端末に対応したiBeacon発信アプリ](https://github.com/microwavePC/iBeaconTransmitter)があるので、時間が余ったらクローンして実機で動かしてみましょう。<br>
+GPS未対応版であれば、自分が居る場所を偽装できるかもしれません。<br>
