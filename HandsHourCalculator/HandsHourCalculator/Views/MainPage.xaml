@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="HandsHourCalculator.Views.MainPage"
+             Title="Hands Hour Calculator">
+
+    <!-- メイン画面のView。「Xaml」というマークアップ調の形式で作成する。   -->
+    <!-- Xamarin.Formsでは、ViewをXamlで作るのが一般的。               -->
+    <!-- ViewをC#で書くことも可能だが、Xamlの方が見やすい。              -->
+    
+    <Grid Margin="10">
+
+        <!-- Gridを使えば、画面を区画で区切った上で、それぞれの区画のサイズに固定値や比率を設定することができる。 -->
+        <!-- この画面では、縦に5分割しつつ、上から4つ目の区画以外は高さを固定値(30pt)にしている。 -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <!-- 画面の上から1つ目の区画に入力欄を設置する。 -->
+        <!-- 入力された文字列は、ViewModelのプロパティ「InputText」にバインドする。 -->
+        <Entry Grid.Row="0" Margin="10,0,10,0"
+               HorizontalOptions="FillAndExpand" VerticalOptions="Center"
+               Keyboard="Numeric" Placeholder="数値を入力してください"/>
+
+        <!-- 画面の上から2つ目の区画にPickerを設置する。 -->
+        <!-- 選択された項目のインデックスは、ViewModelのプロパティ「CalcMethodIndex」にバインドする。 -->
+        <Picker Grid.Row="1" Margin="10,0,10,0"
+                HorizontalOptions="FillAndExpand" VerticalOptions="Center"
+                Title="計算内容を選択してください">
+            <Picker.Items>
+                <x:String>倍返しだ！</x:String>
+                <x:String>10倍返しだ！</x:String>
+                <x:String>100倍返しだ！</x:String>
+            </Picker.Items>
+        </Picker>
+
+        <!-- 画面の上から3つ目の区画に「計算する」ボタンを設置する。 -->
+        <!-- ボタンの処理（コマンド）は、ViewModelのプロパティ「CalculateCommand」にバインドする。 -->
+        <Button Grid.Row="2"
+                HorizontalOptions="Center" VerticalOptions="Center"
+                Text="計算する"/>
+
+        <!-- 画面の上から4つ目の区画に画像表示コントロールを設置する。 -->
+        <!-- 画像のパスは、ViewModelのプロパティ「ImageSourcePath」にバインドする。 -->
+        <Image Grid.Row="3"
+               HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+               BackgroundColor="Transparent"/>
+
+        <!-- 画面の上から5つ目の区画に計算結果用のラベルを設置する。 -->
+        <!-- 計算結果は、ViewModelのプロパティ「CalculationResult」にバインドする。 -->
+        <Label Grid.Row="4"
+               HorizontalTextAlignment="Center"
+               FontSize="20"/>
+        
+    </Grid>
+    
+</ContentPage>
