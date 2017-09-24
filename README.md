@@ -24,7 +24,7 @@ Visual Studio for Macで、クローンしたフォルダ内にある「HandsHou
 
 ![image01](ReadmeImages/image01.png)
 
-◆「ソリューション」とは？
+#### ◆「ソリューション」とは？
 
 Xamarinに限らず、.NET系の制作物（WPF、ASP.NET、etc...）は、
 『「ソリューション」と呼ばれる単位の下に「プロジェクト」と呼ばれる単位がいくつか含まれる』という構成になっています。
@@ -82,3 +82,53 @@ Visual Studio for Mac 上で、共通プロジェクト「HandsHourCalculator」
 　⇒ 画面遷移を実装したりする場合は、これにくっついているApp.xaml.csというファイルを書き換えます。
 - packages.config<br>
 　⇒ どのNuGetパッケージのどのバージョンを使用するかが書かれているファイルです。
+
+### 5. アプリの画面とViewを見比べる
+
+アプリをシミュレーターで起動しながら、Viewsフォルダ内のMainPage.xamlを開きましょう。<br>
+このMainPage.xamlが、アプリの画面を構成しています。<br>
+Xamlファイルはマークアップ調で書かれているため、HTMLを触った経験のある方にはいくらかとっつきやすいかもしれません。<br>
+それぞれの項目が何であるかについては、MainPage.xamlに書いてあるコメントを参照してください。<br>
+
+### 6. ViewModelを見てみる
+
+MainPage.xamlに対応するViewModelを見てみましょう。ViewModelsフォルダ内のMainPageViewModel.csを開いてください。<br>
+後々の工程で、このファイルの中に**Viewとバインドする（＝繋げる）変数の定義**や**Viewから受け取るコマンドと実処理の紐付け**を書いていきます。<br>
+
+先に、このViewModelで使用しているC#特有の記法についていくつか紹介します。<br>
+
+#### C#のsetterとgetter
+
+C#では、以下のようにsetterとgetterを書きます。Javaよりだいぶスリムです。
+```C#
+private string _imageSourcePath;
+public string ImageSourcePath
+{
+    get { return _imageSourcePath; }
+    set { SetProperty(ref _imageSourcePath, value); }
+}
+```
+
+「_imageSourcePath」が変数の実体です。<br>
+普通の変数を扱うような感覚で「ImageSourcePath」への代入や値の取得を行うと、getやsetに書かれている処理が行われます。<br>
+set内で実行されている「SetProperty」は、この変数の値の変化をViewへ通知するために必須の処理（※）です。<br>
+もしViewへの通知が要らない場合は、単に「_imageSourcePath = value;」と書くだけで大丈夫です。<br>
+<br>
+※PrismではSetPropertyが使われますが、Prism以外のフレームワークでMVVMを実装する場合は別の処理が使用されます。
+
+#### regionディレクティブ
+
+所々に「#region 〜」「#endregion」と書かれています。<br>
+これを使うことで、ソース内で「どのようなものをどこに書いておくか」を整理することができます。<br>
+regionで囲われた範囲をたたむこともできるので、開発中にソースが見やすくなります。<br>
+
+#### ドキュメントコメント
+
+以下のようなコメントがいくつかあります。
+```C#
+/// <summary>
+/// 画像リソースのパス
+/// </summary>
+```
+これは「ドキュメントコメント」と呼ばれるもので、外部のソースからこのクラスを使おうとした場合に変数の説明としてここに記載された内容が表示されます。<br>
+
