@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" package="com.mwpc.HandsHourCalculator">
 	<uses-sdk android:minSdkVersion="21" />
 	<application android:label="HandsHourCalculator.Droid" android:theme="@style/MyTheme"></application>
 </manifest>
