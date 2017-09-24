@@ -132,3 +132,128 @@ regionで囲われた範囲をたたむこともできるので、開発中に�
 ```
 これは「ドキュメントコメント」と呼ばれるもので、外部のソースからこのクラスを使おうとした場合に変数の説明としてここに記載された内容が表示されます。<br>
 
+### 7. ViewとViewModelの変数をバインドしてみよう
+
+ユーザーがアプリへ入力した内容を、ViewModelのプロパティにリアルタイムで取得できるようにします。<br>
+まずば、ViewModel側にプロパティを作成していきます。<br>
+
+**例）_inputString の下に InputString を作成する。**
+
+**・追加前**
+```C#
+/// <summary>
+/// ユーザーが入力した文字列
+/// </summary>
+private string _inputText;
+```
+**・追加後**
+```C#
+/// <summary>
+/// ユーザーが入力した文字列
+/// </summary>
+private string _inputText;
+public string InputText
+{
+    get { return _inputText; }
+    set { SetProperty(ref _inputText, value); }
+}
+```
+
+同じ要領で、<br>
+**　_calcMethodIndex の下に CalcMethodIndex**<br>
+**　_calculationResult の下に CalculationResult**<br>
+を作成しましょう。<br>
+
+次に、View側に「このコントロールのプロパティはViewModelのこれにバインドします」という記述を追加していきます。<br>
+
+**例）Entryコントロールへの入力値（プロパティ名：Text）を、ViewModelの「InputText」にバインドする。**
+
+**・追加前**
+```
+<Entry Grid.Row="0" Margin="10,0,10,0"
+       HorizontalOptions="FillAndExpand" VerticalOptions="Center"
+       Keyboard="Numeric" Placeholder="数値を入力してください"/>
+```
+**・追加後**
+```
+<Entry Grid.Row="0" Margin="10,0,10,0"
+       HorizontalOptions="FillAndExpand" VerticalOptions="Center"
+       Keyboard="Numeric" Placeholder="数値を入力してください"
+       Text="{Binding InputText}"/>
+```
+
+同じ要領で、<br>
+　**「Pickerコントロールの選択値（プロパティ名：SelectedIndex）にCalcMethodIndex」**<br>
+　**「Imageコントロールのソース（プロパティ名：Source）にImageSourcePath」**<br>
+　**「Labelコントロールの文字列（プロパティ名：Text）にCalculationResult」**<br>
+をそれぞれバインドしましょう。<br>
+
+ここまでを行った段階でViewModelのプロパティのsetterにブレークポイントを置いてデバッグ実行すると、コントロールに値を入力したときにViewModelのsetterが呼び出されることを確認することができます。<br>
+
+### 8. Viewのボタンの処理をViewModelの処理にバインドしてみよう
+
+Viewに配置されている「計算する」ボタンがタップされたときに、ViewModelの処理「calculate」が実行されるようにします。<br>
+ざっくり手順を書くと、以下の通りです。<br>
+1. ViewModelに「コマンド」を用意する
+1. 用意したコマンドと実処理を紐付ける
+1. Viewに配置してあるボタンのコマンドとViewModelのコマンドをバインドする
+
+#### 8.1. ViewModelに「コマンド」を用意する
+
+サンプルプロジェクトではすでに以下のコマンドが用意してあるので、この手順は飛ばします。<br>
+```C#
+// 計算ボタンのコマンド
+public ICommand CalculateCommand { get; }
+```
+
+#### 8.2. 用意したコマンドと実処理を紐付ける
+
+コマンド「CalculateCommand」と、すでに用意してある実処理「calculate」を紐付けます。<br>
+MainPageViewModelのコンストラクタ（public MainPageViewModel）に、以下のような記述を追加してください。<br>
+
+**・追加前**
+```C#
+/// <summary>
+/// コンストラクタ
+/// </summary>
+public MainPageViewModel(IPageDialogService pageDialogService)
+{
+    // ダイアログ表示処理を扱うサービスの実体をフィールドに保持する。
+    _pageDialogService = pageDialogService;
+}
+```
+
+**・追加後**
+```C#
+/// <summary>
+/// コンストラクタ
+/// </summary>
+public MainPageViewModel(IPageDialogService pageDialogService)
+{
+    // 計算ボタンのコマンドに、計算の実処理を紐付ける。
+    CalculateCommand = new DelegateCommand(calculate);
+
+    // ダイアログ表示処理を扱うサービスの実体をフィールドに保持する。
+    _pageDialogService = pageDialogService;
+}
+```
+
+#### 8.3. Viewに配置してあるボタンのコマンドとViewModelのコマンドをバインドする
+
+MainPage.xamlのButtonに、以下のようにCommandのバインドを追加します。<br>
+
+**・追加前**
+```
+<Button Grid.Row="2"
+        HorizontalOptions="Center" VerticalOptions="Center"
+        Text="計算する"/>
+```
+
+**・追加後**
+```
+<Button Grid.Row="2"
+        HorizontalOptions="Center" VerticalOptions="Center"
+        Text="計算する"
+        Command="{Binding CalculateCommand}"/>
+```
+
