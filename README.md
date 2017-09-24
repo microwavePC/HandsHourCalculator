@@ -169,13 +169,13 @@ public string InputText
 **例）Entryコントロールへの入力値（プロパティ名：Text）を、ViewModelの「InputText」にバインドする。**
 
 **・追加前**
-```
+```XML
 <Entry Grid.Row="0" Margin="10,0,10,0"
        HorizontalOptions="FillAndExpand" VerticalOptions="Center"
        Keyboard="Numeric" Placeholder="数値を入力してください"/>
 ```
 **・追加後**
-```
+```XML
 <Entry Grid.Row="0" Margin="10,0,10,0"
        HorizontalOptions="FillAndExpand" VerticalOptions="Center"
        Keyboard="Numeric" Placeholder="数値を入力してください"
@@ -243,14 +243,14 @@ public MainPageViewModel(IPageDialogService pageDialogService)
 MainPage.xamlのButtonに、以下のようにCommandのバインドを追加します。<br>
 
 **・追加前**
-```
+```XML
 <Button Grid.Row="2"
         HorizontalOptions="Center" VerticalOptions="Center"
         Text="計算する"/>
 ```
 
 **・追加後**
-```
+```XML
 <Button Grid.Row="2"
         HorizontalOptions="Center" VerticalOptions="Center"
         Text="計算する"
