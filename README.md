@@ -1,5 +1,7 @@
 # Hands Hour Calculator
 
+手を動かす時間（Hands hour）です。
+
 ## このアプリは何？
 
 Xamarin.FormsとMVVMのハンズオン用のサンプルアプリです。<br>
@@ -32,10 +34,10 @@ Xamarin.Formsのプロジェクトでは、基本的には以下のような構�
 
 
 ソリューション<br>
-├── ソリューション名**（全プラットフォームの共通部分を持つプロジェクト）** <br>
-├── ソリューション名.Droid**（Androidの固有部分を持つプロジェクト）** <br>
-├── ソリューション名.iOS**（iOSの固有部分を持つプロジェクト）** <br>
-└── ソリューション名.UWP**（UWPの固有部分を持つプロジェクト）** <br>
+├── ソリューション名 **（全プラットフォームの共通部分を持つプロジェクト）** <br>
+├── ソリューション名.Droid **（Androidの固有部分を持つプロジェクト）** <br>
+├── ソリューション名.iOS **（iOSの固有部分を持つプロジェクト）** <br>
+└── ソリューション名.UWP **（UWPの固有部分を持つプロジェクト）** <br>
 
 このハンズオンでは、全プラットフォームの共通部分を持つプロジェクトのみに手を入れます。<br>
 プラットフォームごとの固有機能やハードウェア（カメラ、Bluetooth等）を使う機能を作りたい場合は、基本的にはプラットフォームの固有部分を実装する必要があります。ですが、最近ではプラットフォームごとに処理を実装しなくても、公開されているライブラリ（**NuGetパッケージ**）を使うだけで済んだりもします。<br>
@@ -160,8 +162,8 @@ public string InputText
 ```
 
 同じ要領で、<br>
-**　_calcMethodIndex の下に CalcMethodIndex**<br>
-**　_calculationResult の下に CalculationResult**<br>
+　**_calcMethodIndex の下に CalcMethodIndex**<br>
+　**_calculationResult の下に CalculationResult**<br>
 を作成しましょう。<br>
 
 次に、View側に「このコントロールのプロパティはViewModelのこれにバインドします」という記述を追加していきます。<br>
