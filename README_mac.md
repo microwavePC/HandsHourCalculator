@@ -20,11 +20,11 @@ MVVM構築用のフレームワークには、Prism.Formsを使用していま�
 
 このプロジェクトのソースをローカルにクローンします。
 
-### 2. Visual Studio 2017 で「ソリューション」を開く。
+### 2. Visual Studio for Mac で「ソリューション」を開く。
 
-Visual Studio 2017 で、クローンしたフォルダ内にある「HandsHourCalculator.sln」を開きます。
+Visual Studio for Macで、クローンしたフォルダ内にある「HandsHourCalculator.sln」を開きます。
 
-![image01](ReadmeImages/windows/image01.png)
+![image01](ReadmeImages/image01.png)
 
 #### ◆「ソリューション」とは？
 
@@ -46,28 +46,36 @@ Xamarin.Formsのプロジェクトでは、基本的には以下のような構�
 
 ソリューションを開いたら、まずはiOS用にビルドしつつシミュレーターで動くことを確認してみましょう。<br>
 
-![image02](ReadmeImages/windows/image02.png)
+![image02](ReadmeImages/image02.png)
+
+#### ◆HandsHourCalculator.UWPだけ警告マークが付いているのはなぜ？
+
+UWP用のプロジェクトは、Windowsでしかビルドすることができません。
+そのため、このように警告マークが付いています。
+
 
 ビルドが完了したら、シミュレーターが起動し、アプリが実行されます。<br>
 クローンしてからの初回ビルド時は、パッケージのダウンロードがあるため、時間がかかることがあります。<br>
 以下のように殺風景なアプリが立ち上がったら成功です。<br>
 
-![image03](ReadmeImages/windows/image03.png)
+![image03](ReadmeImages/image03.png)
 
 サンプルプロジェクトを取得したままの状態では、画面を操作しても反応はありません。<br>
 このプロジェクトのソースを実際に書き換えて、動くものを作っていきます。
 
 ### 4. 共通プロジェクトの構成を見る
 
-Visual Studio 2017 上で、共通プロジェクト「HandsHourCalculator」を展開すると、以下の構成になっています。<br>
+Visual Studio for Mac 上で、共通プロジェクト「HandsHourCalculator」を展開すると、以下の構成になっています。<br>
 
-![image04](ReadmeImages/windows/image04.png)
+![image04](ReadmeImages/image04.png)
 
 今回特に重要な部分は、「Views」「ViewModels」「Models」です。<br>
 その他の部分は今回触れる予定はありませんが、紹介だけすると、以下のようなものになっています。<br>
 
 - 参照<br>
 　⇒ 参照可能なライブラリ（using 〜 で使用できるもの）を指定しています。
+- パッケージ<br>
+　⇒ 使用するNuGetパッケージ（第三者が作ったライブラリのようなもの）を指定しています。
 - Images<br>
 　⇒ 共通化して利用する画像リソースを配置するために作ったフォルダです。
 - Properties<br>
@@ -307,9 +315,20 @@ switch (_calcMethodIndex)
 ### 10. アプリを動かしてみよう
 
 ここまでの手順が完了したら、入力から計算結果の画面への反映まで、一連の動作が行われるような状態になっています。<br>
-アプリを再度動かしてみましょう。<br>
+アプリを再度シミュレーターで動かしてみましょう。<br>
 
-### 【おまけ】 いまどこアプリに「なりすまし」をかましてみよう
+### おまけ1. iOSの実機でデバッグしてみよう
+
+時間が余ってしまった方は、[この説明](https://qiita.com/KakeruFukuda/items/176c0aef5db0e04d6859)を参考に、アプリをiOSの実機でデバッグしてみましょう。<br>
+もし持ち込み端末が普段iOSアプリの開発に使用しているものであれば、実機をMacに接続してデバッグ先を変えるだけですんなり実行できます。<br>
+
+![image05](ReadmeImages/image05.png)
+
+### おまけ2.（Android SDK が Mac に入っているなら）Androidでデバッグ実行してみよう
+
+実行方法を「HandsHourCalculator.Droid  >  Debug | x86  >  Androidの端末名」に変更すれば、Androidの実機やシミュレーターでもデバッグすることができます。<br>
+
+### おまけ3. いまどこアプリに「なりすまし」をかましてみよう
 
 [iOS/Android/WindowsPhoneの全端末に対応したiBeacon発信アプリ](https://github.com/microwavePC/iBeaconTransmitter)があるので、時間が余ったらクローンして実機で動かしてみましょう。<br>
 GPS未対応版であれば、自分が居る場所を偽装できるかもしれません。<br>

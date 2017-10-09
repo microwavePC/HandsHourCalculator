@@ -15,11 +15,35 @@
         <!-- Gridを使えば、画面を区画で区切った上で、それぞれの区画のサイズに固定値や比率を設定することができる。 -->
         <!-- この画面では、縦に5分割しつつ、上から4つ目の区画以外は高さを固定値(30pt)にしている。 -->
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition>
+                <RowDefinition.Height>
+                    <OnPlatform x:TypeArguments="GridLength"
+                            iOS="30"
+                            Android="40" />
+                </RowDefinition.Height>
+            </RowDefinition>
+            <RowDefinition>
+                <RowDefinition.Height>
+                    <OnPlatform x:TypeArguments="GridLength"
+                            iOS="30"
+                            Android="40" />
+                </RowDefinition.Height>
+            </RowDefinition>
+            <RowDefinition>
+                <RowDefinition.Height>
+                    <OnPlatform x:TypeArguments="GridLength"
+                            iOS="30"
+                            Android="40" />
+                </RowDefinition.Height>
+            </RowDefinition>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition>
+                <RowDefinition.Height>
+                    <OnPlatform x:TypeArguments="GridLength"
+                            iOS="30"
+                            Android="40" />
+                </RowDefinition.Height>
+            </RowDefinition>
         </Grid.RowDefinitions>
 
         <!-- 画面の上から1つ目の区画に入力欄を設置する。 -->
